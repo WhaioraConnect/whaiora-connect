@@ -1,12 +1,11 @@
+'use client';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { useAuth } from '@contexts/AuthContext'
-import { useToast } from '@hooks/useToast'
-import { Button } from '@components/ui/Button'
-import { Input } from '@components/ui/Input'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card'
-import { Alert, AlertDescription } from '@components/ui/Alert'
+import { useAuth } from '../contexts/AuthContext'
+import { Button } from '../components/ui/Button'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card'
+import { Alert, AlertDescription } from '../components/ui/Alert'
 import { AlertCircle } from 'lucide-react'
 
 export default function SignUp() {

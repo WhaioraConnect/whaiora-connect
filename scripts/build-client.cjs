@@ -6,7 +6,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const projectRoot = path.resolve(__dirname, '..');
-const entry = path.join(projectRoot, 'src', 'main.tsx');
+const entry = path.join(projectRoot, 'src', 'index.tsx');
 const outDir = path.join(projectRoot, 'dist');
 
 /* -------------------------------------------------- */
@@ -41,7 +41,7 @@ function copyRecursive(src, dest) {
 /* -------------------------------------------------- */
 
 if (!fs.existsSync(entry)) {
-  console.error('❌ ERROR: src/main.tsx not found');
+  console.error('❌ ERROR: src/index.tsx not found');
   process.exit(1);
 }
 

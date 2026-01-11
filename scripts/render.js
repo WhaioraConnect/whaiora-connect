@@ -123,9 +123,18 @@ for (const pageInfo of allPages) {
   const entry = path.join(dir, file);
   const bundlePath = path.join(tmpDir, `${name}.bundle.cjs`);
 
-  // Skip client-only pages
+  // Skip client-only pages and pages with complex dependencies
   const firstLine = fs.readFileSync(entry, 'utf8').split('\n')[0].trim();
-  if (firstLine === '"use client";' || firstLine === "'use client';") {
+  const fileContent = fs.readFileSync(entry, 'utf8');
+  const hasClientFeatures = fileContent.includes('Link') || 
+                           fileContent.includes('useNavigate') || 
+                           fileContent.includes('Helmet') || 
+                           fileContent.includes('useAuth') || 
+                           fileContent.includes('@') || 
+                           firstLine === '"use client";' || 
+                           firstLine === "'use client';";
+  
+  if (hasClientFeatures) {
     console.log(`Skipping client-only page ${file}`);
     continue;
   }

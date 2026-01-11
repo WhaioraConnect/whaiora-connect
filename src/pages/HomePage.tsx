@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { ArrowRight, Heart, Brain, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';

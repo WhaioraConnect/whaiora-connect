@@ -1,3 +1,4 @@
+'use client';
 import { ArrowRight, Heart, Activity, Brain, Flower2, Sparkles, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
