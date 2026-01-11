@@ -1,0 +1,259 @@
+#!/usr/bin/env node
+const esbuild = require('esbuild');
+const fs = require('fs');
+const path = require('path');
+
+const whaioraConnectPlatformRoot = path.resolve(__dirname, '..');
+const pagesDir = path.join(whaioraConnectPlatformRoot, 'src', 'pages');
+const articlesDir = path.join(whaioraConnectPlatformRoot, 'src', 'pages', 'articles');
+const outDir = path.join(whaioraConnectPlatformRoot, 'dist');
+const articlesOutDir = path.join(whaioraConnectPlatformRoot, 'dist', 'articles');
+const tmpDir = path.join(whaioraConnectPlatformRoot, '.ssr_temp');
+
+const outputMap = {
+  'HomePage': 'index.html',
+  'AboutPage': 'about.html',
+  'ServicesPage': 'services.html',
+  'LoginPage': 'login.html',
+  'RegisterPage': 'register.html',
+  'WellnessTipsPage': 'wellness-tips.html',
+  
+  // Article pages
+  'HolisticWellnessPage': 'articles/holistic-wellness-guide.html',
+  'BreathingTechniquesPage': 'articles/breathing-techniques.html',
+  'BuildingResiliencePage': 'articles/building-resilience.html',
+  'SleepMentalHealthPage': 'articles/sleep-mental-health.html',
+  'NutritionMentalHealthPage': 'articles/nutrition-mental-health.html',
+  'HealthyBoundariesPage': 'articles/healthy-boundaries.html',
+  'MindfulnessDailyLifePage': 'articles/mindfulness-daily-life.html'
+};
+
+// Page-specific titles and descriptions
+const pageMetadata = {
+  'HomePage': {
+    title: 'Home - Whaiora Connect',
+    description: 'Connecting communities with holistic wellness through manaakitanga, whanaungatanga, and quality care.'
+  },
+  'AboutPage': {
+    title: 'About Us - Whaiora Connect',
+    description: 'Learn about our mission to provide holistic digital wellness services to communities across Aotearoa New Zealand.'
+  },
+  'ServicesPage': {
+    title: 'Our Services - Whaiora Connect',
+    description: 'Explore our comprehensive range of wellness services including counseling, health support, and cultural programs.'
+  },
+  'LoginPage': {
+    title: 'Login - Whaiora Connect',
+    description: 'Access your Whaiora Connect account to manage your wellness journey.'
+  },
+  'RegisterPage': {
+    title: 'Register - Whaiora Connect',
+    description: 'Join Whaiora Connect and start your holistic wellness journey today.'
+  },
+  'WellnessTipsPage': {
+    title: 'Wellness Tips - Whaiora Connect',
+    description: 'Discover practical wellness tips and advice for your holistic health journey.'
+  },
+  // Article metadata
+  'HolisticWellnessPage': {
+    title: 'Understanding Holistic Wellness: A Complete Guide - Whaiora Connect',
+    description: 'Discover how integrating mind, body, and spirit can transform your approach to health and wellbeing.'
+  },
+  'BreathingTechniquesPage': {
+    title: '5 Simple Breathing Techniques for Daily Stress Relief - Whaiora Connect',
+    description: 'Learn practical breathwork exercises you can do anywhere to calm your mind and reduce anxiety.'
+  },
+  'BuildingResiliencePage': {
+    title: 'Building Resilience: Mental Health Strategies That Work - Whaiora Connect',
+    description: 'Develop the inner strength to navigate life\'s challenges with grace and emerge stronger.'
+  },
+  'SleepMentalHealthPage': {
+    title: 'The Connection Between Sleep and Mental Wellbeing - Whaiora Connect',
+    description: 'Discover why quality sleep is essential for mental health and how to improve your sleep naturally.'
+  },
+  'NutritionMentalHealthPage': {
+    title: 'Nutrition for Mental Health: Foods That Support Your Mind - Whaiora Connect',
+    description: 'Discover the powerful connection between what you eat and how you feel, think, and cope with stress.'
+  },
+  'HealthyBoundariesPage': {
+    title: 'Creating Healthy Boundaries: A Guide to Emotional Wellbeing - Whaiora Connect',
+    description: 'Learn to protect your energy, honor your needs, and build relationships that support your wellbeing.'
+  },
+  'MindfulnessDailyLifePage': {
+    title: 'Mindfulness in Daily Life: Practical Tips for Beginners - Whaiora Connect',
+    description: 'Discover how to bring present-moment awareness into everyday activities and reduce stress naturally.'
+  }
+};
+
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+}
+
+ensureDir(outDir);
+ensureDir(articlesOutDir);
+ensureDir(tmpDir);
+
+// Collect all page files
+const mainPageFiles = fs.existsSync(pagesDir)
+  ? fs.readdirSync(pagesDir).filter((f) => (f.endsWith('.tsx') || f.endsWith('.jsx') || f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('_'))
+  : [];
+
+const articlePageFiles = fs.existsSync(articlesDir)
+  ? fs.readdirSync(articlesDir).filter((f) => f.endsWith('.tsx') || f.endsWith('.jsx') || f.endsWith('.ts') || f.endsWith('.js'))
+  : [];
+
+const allPages = [
+  ...mainPageFiles.map(f => ({ file: f, dir: pagesDir })),
+  ...articlePageFiles.map(f => ({ file: f, dir: articlesDir }))
+];
+
+if (allPages.length === 0) {
+  console.error('No page files found in', pagesDir);
+  process.exit(1);
+}
+
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+
+console.log('Found pages:', allPages.map(p => p.file).join(', '));
+
+for (const pageInfo of allPages) {
+  const { file, dir } = pageInfo;
+  const name = path.parse(file).name;
+  const entry = path.join(dir, file);
+  const bundlePath = path.join(tmpDir, `${name}.bundle.cjs`);
+
+  // Skip client-only pages
+  const firstLine = fs.readFileSync(entry, 'utf8').split('\n')[0].trim();
+  if (firstLine === '"use client";' || firstLine === "'use client';") {
+    console.log(`Skipping client-only page ${file}`);
+    continue;
+  }
+
+  console.log(`Bundling ${entry} -> ${bundlePath}`);
+  try {
+    esbuild.buildSync({
+      entryPoints: [entry],
+      bundle: true,
+      platform: 'node',
+      format: 'cjs',
+      outfile: bundlePath,
+      sourcemap: false,
+      external: [],
+      loader: {
+        '.js': 'jsx',   // Enable JSX for .js files
+        '.jsx': 'jsx',
+        '.ts': 'tsx',
+        '.tsx': 'tsx',
+        '.css': 'text'  // Treat CSS imports as text (will be ignored in SSR)
+      },
+      // Add resolve extensions to help find modules
+      resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+      // Add alias for @ imports
+      alias: {
+        '@': path.join(whaioraConnectPlatformRoot, 'src')
+      }
+    });
+  } catch (err) {
+    console.error('esbuild error for', entry, err.message || err);
+    process.exit(1);
+  }
+
+  let mod;
+  try {
+    mod = require(bundlePath);
+  } catch (err) {
+    console.error('Failed to require bundle', bundlePath, err);
+    process.exit(1);
+  }
+
+  const Component = mod.default || mod[name] || mod;
+  if (!Component) {
+    console.warn('No default export found in', file, '- skipping');
+    continue;
+  }
+
+  let bodyHtml = '';
+  try {
+    const el = React.createElement(Component);
+    bodyHtml = ReactDOMServer.renderToString(el);
+  } catch (err) {
+    console.error('Error rendering', file, err);
+    process.exit(1);
+  }
+
+  // Get metadata for this page
+  const metadata = pageMetadata[name] || {
+    title: `${name} - Whaiora Connect`,
+    description: 'Holistic Digital Wellness'
+  };
+
+  // Determine output file path
+  const outputFileName = outputMap[name] || `${name.toLowerCase()}.html`;
+  
+  // Check if output is in articles subdirectory
+  const isArticlePage = outputFileName.startsWith('articles/');
+  
+  // Set paths based on output location
+  const cssPath = isArticlePage ? '../main.css' : './main.css';
+  const jsPath = isArticlePage ? '../main.js' : './main.js';
+  const faviconPath = isArticlePage ? '../' : './';
+
+  const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="${metadata.description}" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="${faviconPath}favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="${faviconPath}favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="${faviconPath}favicon-16x16.png" />
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="${faviconPath}apple-touch-icon.png" />
+    
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="${faviconPath}android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="${faviconPath}android-chrome-512x512.png" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="${faviconPath}site.webmanifest" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#00758f" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#00758f" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="${metadata.title}" />
+    <meta property="og:description" content="${metadata.description}" />
+    <meta property="og:image" content="${faviconPath}android-chrome-512x512.png" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${metadata.title}" />
+    <meta name="twitter:description" content="${metadata.description}" />
+    <meta name="twitter:image" content="${faviconPath}android-chrome-512x512.png" />
+    
+    <title>${metadata.title}</title>
+    <link rel="stylesheet" href="${cssPath}" />
+  </head>
+  <body>
+    <div id="root">${bodyHtml}</div>
+    <script type="module" src="${jsPath}"></script>
+  </body>
+</html>`;
+
+  const outPath = path.join(outDir, outputFileName);
+  
+  // Ensure the output directory exists (for articles subfolder)
+  const outFileDir = path.dirname(outPath);
+  ensureDir(outFileDir);
+  
+  fs.writeFileSync(outPath, html, 'utf8');
+  console.log('Wrote', outPath);
+}
+
+console.log('All pages rendered to', outDir);
