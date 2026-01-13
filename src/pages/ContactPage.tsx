@@ -33,21 +33,21 @@ export default function ContactPage() {
                     <Mail className="w-6 h-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold">Email</h3>
-                      <p className="text-muted-foreground">support@whaioraconnect.co.nz</p>
+                      <p className="text-muted-foreground">maxwell@whaioraconnect.co.nz</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <Phone className="w-6 h-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold">Phone</h3>
-                      <p className="text-muted-foreground">+64 9 XXX XXXX</p>
+                      <p className="text-muted-foreground">+64 29 125 4277 </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <MapPin className="w-6 h-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold">Address</h3>
-                      <p className="text-muted-foreground">Auckland, New Zealand</p>
+                      <p className="text-muted-foreground">Hamilton, New Zealand</p>
                     </div>
                   </div>
                 </div>

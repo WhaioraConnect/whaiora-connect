@@ -1,30 +1,30 @@
-# Whaiora Connect — Static Renderer (SSR)
+# AI Inference in Supabase Edge Functions
 
-This folder contains a lightweight **server-side rendering (SSR)** helper that bundles and pre-renders React pages from `src/pages` into static HTML files inside `dist/`.  
-It enables **SEO-friendly**, crawlable HTML while keeping your existing `.tsx` components intact.
+Since Supabase Edge Runtime [v1.36.0](https://github.com/supabase/edge-runtime/releases/tag/v1.36.0) you can run the [`gte-small` model](https://huggingface.co/Supabase/gte-small) natively within Supabase Edge Functions without any external dependencies! This allows you to easily generate text embeddings without calling any external APIs!
 
----
+## Semantic Search with pgvector and Supabase Edge Functions
 
-## ✳️ What’s Included
+This demo consists of three parts:
 
-- **`package.json`** — minimal manifest with a `render` script and dependencies.  
-- **`scripts/render.js`** — Node script using `esbuild` and `react-dom/server` to pre-render pages.  
-- **`README_SSR.md`** — this guide, with usage, troubleshooting, and extension notes.
+1. A [`generate-embedding`](./supabase/functions/generate-embedding/index.ts) database webhook edge function which generates embeddings when a content row is added (or updated) in the [`public.embeddings`](./supabase/migrations/20240408072601_embeddings.sql) table.
+2. A [`query_embeddings` Postgres function](./supabase/migrations/20240410031515_vector-search.sql) which allows us to perform similarity search from an egde function via [Remote Procedure Call (RPC)](https://supabase.com/docs/guides/database/functions?language=js).
+3. A [`search` edge function](./supabase/functions/search/index.ts) which generates the embedding for the search term, performs the similarity search via RPC function call, and returns the result.
 
----
+## Deploy
 
-## ⚙️ Prerequisites
+- Link your project: `supabase link`
+- Deploy Edge Functions: `supabase functions deploy`
+- Update project config to [enable webhooks](https://supabase.com/docs/guides/local-development/cli/config#experimental.webhooks.enabled): `supabase config push`
+- Navigate to the [database-webhook](./supabase/migrations/20240410041607_database-webhook.sql) migration file and insert your `generate-embedding` function details.
+- Push up the database schema `supabase db push`
 
-- Node.js **v16+** (recommended v18 – v24) and npm installed.  
-  - On Windows, download from [nodejs.org](https://nodejs.org/) and ensure `node` and `npm` are in your PATH.
+## Run
 
----
+Run a search via curl POST request:
 
-## 🚀 Quick Start (PowerShell)
-
-```powershell
-cd "C:\Users\Maxwell\Documents\Whaiora Connect Limited\Project"
-npm install
-npm run render
-# whaiora-connect
-# whaiora-connect
+```bash
+curl -i --location --request POST 'https://<PROJECT-REF>.supabase.co/functions/v1/search' \
+    --header 'Authorization: Bearer <SUPABASE_ANON_KEY>' \
+    --header 'Content-Type: application/json' \
+    --data '{"search":"vehicles"}'
+```
