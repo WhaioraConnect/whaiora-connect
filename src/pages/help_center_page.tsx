@@ -125,7 +125,7 @@ export default function HelpCenter() {
       <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20 border-b">
         <div className="container mx-auto px-4 py-16">
           <nav className="mb-8">
-            <a href="/" className="text-primary hover:underline">← Back to Home</a>
+            <Link href="/" className="text-primary hover:underline">← Back to Home</Link>
           </nav>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Help Center</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mb-8">
@@ -159,15 +159,15 @@ export default function HelpCenter() {
         {/* Quick Links */}
         <div className="mb-12">
           <div className="flex flex-wrap gap-3">
-            <a href="/faq" className="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors">
+            <Link href="/faq" className="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors">
               FAQ
-            </a>
-            <a href="/contact" className="px-4 py-2 bg-muted rounded-lg hover:bg-muted/70 transition-colors">
+            </Link>
+            <Link href="/contact" className="px-4 py-2 bg-muted rounded-lg hover:bg-muted/70 transition-colors">
               Contact Support
-            </a>
-            <a href="/provider-application" className="px-4 py-2 bg-muted rounded-lg hover:bg-muted/70 transition-colors">
+            </Link>
+            <Link href="/provider-application" className="px-4 py-2 bg-muted rounded-lg hover:bg-muted/70 transition-colors">
               Provider Resources
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -204,13 +204,13 @@ export default function HelpCenter() {
               className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
               Contact Support
-            </a>
+            </Link>
             <a
               href="mailto:support@whaioraconnect.nz"
               className="inline-flex items-center justify-center px-8 py-3 border rounded-lg hover:bg-muted transition-colors"
             >
               Email Us
-            </a>
+            </Link>
           </div>
         </div>
       </div>

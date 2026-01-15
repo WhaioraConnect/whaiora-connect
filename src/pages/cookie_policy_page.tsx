@@ -3,7 +3,7 @@ export default function CookiePolicy() {
     <div className="min-h-screen bg-background">
       <div className="bg-primary/10 border-b">
         <div className="container mx-auto px-4 py-12">
-          <a href="/" className="text-primary hover:underline">← Back</a>
+          <Link href="/" className="text-primary hover:underline">← Back</Link>
           <h1 className="text-3xl font-bold mt-4">Cookie Policy</h1>
           <p className="text-muted-foreground">Last updated: January 12, 2026</p>
         </div>

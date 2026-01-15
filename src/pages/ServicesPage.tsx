@@ -55,8 +55,9 @@ export default function ServicesPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
-            src="/img/wellness-guide.jpg" 
+            src="/cdn-cgi/image/width=1200,quality=80,format=auto/img/wellness-guide.jpg" 
             alt="Our Services"
+            loading="lazy"
             className="w-full h-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-background"></div>

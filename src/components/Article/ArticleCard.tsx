@@ -28,7 +28,7 @@ export default function ArticleCard({
 
   return (
     <article className="bg-card rounded-lg shadow-md hover:shadow-lg transition-all overflow-hidden group">
-      <a href={`/articles/${slug}`} className="block">
+      <Link href={`/articles/${slug}`} className="block">
         <div className="aspect-video relative overflow-hidden">
           <img
             src={image || `/img/${slug}.jpg`}
@@ -40,7 +40,7 @@ export default function ArticleCard({
             {category}
           </span>
         </div>
-      </a>
+      </Link>
 
       <div className="p-6">
         <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3 flex-wrap">
@@ -56,9 +56,9 @@ export default function ArticleCard({
         </div>
 
         <h2 className="text-xl font-bold text-foreground mb-3 line-clamp-2">
-          <a href={`/articles/${slug}`} className="hover:text-primary transition-colors">
+          <Link href={`/articles/${slug}`} className="hover:text-primary transition-colors">
             {title}
-          </a>
+          </Link>
         </h2>
 
         <p className="text-muted-foreground mb-4 line-clamp-3">{description}</p>
@@ -69,7 +69,7 @@ export default function ArticleCard({
           className="inline-flex items-center gap-2 text-primary font-semibold transition-all hover:gap-3"
         >
           Read More <span>→</span>
-        </a>
+        </Link>
       </div>
     </article>
   );

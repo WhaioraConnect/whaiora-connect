@@ -41,8 +41,9 @@ export default function AboutPage() {
       {/* Hero Section with Image */}
       <div className="relative h-[500px] overflow-hidden">
         <img 
-          src="/img/holistic-healing.jpg" 
+          src="/cdn-cgi/image/width=1200,quality=80,format=auto/img/holistic-healing.jpg" 
           alt="About Whaiora Connect - Holistic Healing"
+          loading="lazy"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30"></div>

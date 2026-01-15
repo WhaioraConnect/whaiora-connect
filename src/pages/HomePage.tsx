@@ -8,19 +8,19 @@ export default function HomePage() {
       icon: Heart,
       title: "Yoga & Meditation",
       desc: "Find inner peace and physical balance through guided yoga practices and mindfulness meditation sessions.",
-      image: "/img/yoga-meditation.jpg"
+      image: "/cdn-cgi/image/width=600,quality=80,format=auto/img/yoga-meditation.jpg"
     },
     {
       icon: Activity,
       title: "Physiotherapy",
       desc: "Restore movement and function with expert physiotherapy services for injury recovery and pain management.",
-      image: "/img/physiotherapy.jpg"
+      image: "/cdn-cgi/image/width=600,quality=80,format=auto/img/physiotherapy.jpg"
     },
     {
       icon: Brain,
       title: "Mental Health Services",
       desc: "Access compassionate mental health support from qualified counsellors and therapists who understand your journey.",
-      image: "/img/mental-health.jpg"
+      image: "/cdn-cgi/image/width=600,quality=80,format=auto/img/mental-health.jpg"
     }
   ];
 
@@ -29,13 +29,13 @@ export default function HomePage() {
       href: "/articles/breathing-techniques",
       title: "5 Simple Breathing Techniques for Daily Stress Relief",
       desc: "Learn practical breathwork exercises you can do anywhere to calm your mind and reduce anxiety.",
-      image: "/img/breathing-techniques.jpg"
+      image: "/cdn-cgi/image/width=600,quality=80,format=auto/img/breathing-techniques.jpg"
     },
     {
       href: "/articles/holistic-wellness-guide",
       title: "Understanding Holistic Wellness: A Complete Guide",
       desc: "Discover how integrating mind, body, and spirit can transform your approach to health and wellbeing.",
-      image: "/img/wellness-guide.jpg"
+      image: "/cdn-cgi/image/width=600,quality=80,format=auto/img/wellness-guide.jpg"
     }
   ];
 
@@ -135,6 +135,7 @@ export default function HomePage() {
                     <img 
                       src={service.image} 
                       alt={service.title}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -194,6 +195,7 @@ export default function HomePage() {
                   <img 
                     src={tip.image} 
                     alt={tip.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -249,8 +251,9 @@ export default function HomePage() {
               </div>
               <div className="relative">
                 <img 
-                  src="/img/holistic-healing.jpg" 
+                  src="/cdn-cgi/image/width=800,quality=80,format=auto/img/holistic-healing.jpg" 
                   alt="Holistic healing approach"
+                  loading="lazy"
                   className="rounded-xl shadow-2xl"
                 />
               </div>

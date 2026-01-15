@@ -24,7 +24,7 @@ export default function ArticleLayout({ title, date, readTime, category, content
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Wellness Tips</span>
-        </a>
+        </Link>
       </div>
 
       {/* Hero section with image */}
@@ -103,13 +103,13 @@ export default function ArticleLayout({ title, date, readTime, category, content
               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
             >
               Explore Our Services
-            </a>
+            </Link>
             <a
               href="/register"
               className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-semibold hover:bg-secondary/90 transition-colors"
             >
               Book a Consultation
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -125,7 +125,7 @@ export default function ArticleLayout({ title, date, readTime, category, content
                 >
                   <span className="text-primary group-hover:translate-x-1 transition-transform">→</span>
                   <span className="text-foreground font-medium">{article.title}</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
