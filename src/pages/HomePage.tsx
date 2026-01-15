@@ -134,6 +134,12 @@ export default function HomePage() {
                   <div className="aspect-video relative overflow-hidden">
                     <img 
                       src={service.image} 
+                      srcSet={`
+                        ${service.image.replace('width=600', 'width=400')} 400w,
+                        ${service.image} 600w,
+                        ${service.image.replace('width=600', 'width=800')} 800w
+                      `}
+                      sizes="(max-width: 768px) 90vw, 600px"
                       alt={service.title}
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -194,6 +200,12 @@ export default function HomePage() {
                 <div className="aspect-video relative overflow-hidden">
                   <img 
                     src={tip.image} 
+                    srcSet={`
+                      ${tip.image.replace('width=600', 'width=400')} 400w,
+                      ${tip.image} 600w,
+                      ${tip.image.replace('width=600', 'width=800')} 800w
+                    `}
+                    sizes="(max-width: 768px) 90vw, 600px"
                     alt={tip.title}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -251,7 +263,13 @@ export default function HomePage() {
               </div>
               <div className="relative">
                 <img 
-                  src="/cdn-cgi/image/width=800,quality=80,format=auto/img/holistic-healing.jpg" 
+                  src="/cdn-cgi/image/width=800,format=auto/img/holistic-healing.jpg" 
+                  srcSet="
+                    /cdn-cgi/image/width=400,format=auto/img/holistic-healing.jpg 400w,
+                    /cdn-cgi/image/width=800,format=auto/img/holistic-healing.jpg 800w,
+                    /cdn-cgi/image/width=1200,format=auto/img/holistic-healing.jpg 1200w
+                  "
+                  sizes="(max-width: 768px) 90vw, 800px"
                   alt="Holistic healing approach"
                   loading="lazy"
                   className="rounded-xl shadow-2xl"

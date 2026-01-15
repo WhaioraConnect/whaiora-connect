@@ -41,7 +41,13 @@ export default function AboutPage() {
       {/* Hero Section with Image */}
       <div className="relative h-[500px] overflow-hidden">
         <img 
-          src="/cdn-cgi/image/width=1200,quality=80,format=auto/img/holistic-healing.jpg" 
+          src="/cdn-cgi/image/width=1200,format=auto/img/holistic-healing.jpg" 
+          srcSet="
+            /cdn-cgi/image/width=600,format=auto/img/holistic-healing.jpg 600w,
+            /cdn-cgi/image/width=1200,format=auto/img/holistic-healing.jpg 1200w,
+            /cdn-cgi/image/width=1800,format=auto/img/holistic-healing.jpg 1800w
+          "
+          sizes="(max-width: 768px) 100vw, 1200px"
           alt="About Whaiora Connect - Holistic Healing"
           loading="lazy"
           className="w-full h-full object-cover"

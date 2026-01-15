@@ -7,7 +7,13 @@ export default function ContactPage() {
       {/* Hero Section with Image */}
       <div className="relative h-[300px] overflow-hidden">
         <img 
-          src="/cdn-cgi/image/width=800,quality=80,format=auto/img/mental-health.jpg" 
+          src="/cdn-cgi/image/width=800,format=auto/img/mental-health.jpg" 
+          srcSet="
+            /cdn-cgi/image/width=400,format=auto/img/mental-health.jpg 400w,
+            /cdn-cgi/image/width=800,format=auto/img/mental-health.jpg 800w,
+            /cdn-cgi/image/width=1200,format=auto/img/mental-health.jpg 1200w
+          "
+          sizes="(max-width: 768px) 100vw, 800px"
           alt="Contact Us"
           loading="lazy"
           className="w-full h-full object-cover"
