@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ArticleLayoutProps {
   title: string;
@@ -18,8 +19,8 @@ export default function ArticleLayout({ title, date, readTime, category, content
   return (
     <>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <a
-          href="/wellness-tips"
+        <Link
+          to="/wellness-tips"
           className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -98,14 +99,14 @@ export default function ArticleLayout({ title, date, readTime, category, content
             Connect with our team of holistic health professionals who understand the importance of mind, body, and spirit integration.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a
-              href="/services"
+            <Link
+              to="/services"
               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
             >
               Explore Our Services
             </Link>
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-semibold hover:bg-secondary/90 transition-colors"
             >
               Book a Consultation
@@ -118,9 +119,9 @@ export default function ArticleLayout({ title, date, readTime, category, content
             <h3 className="text-2xl font-bold text-foreground mb-6">Related Articles</h3>
             <div className="grid gap-4">
               {relatedArticles.map((article) => (
-                <a
+                <Link
                   key={article.slug}
-                  href={`/articles/${article.slug}`}
+                  to={`/articles/${article.slug}`}
                   className="flex items-center gap-3 p-4 bg-card rounded-lg hover:bg-primary/5 transition-colors group"
                 >
                   <span className="text-primary group-hover:translate-x-1 transition-transform">→</span>

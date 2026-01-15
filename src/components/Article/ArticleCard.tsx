@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 // ArticleCard.tsx
 interface ArticleCardProps {
   title: string;
@@ -7,7 +9,7 @@ interface ArticleCardProps {
   description: string;
   category: string;
   image?: string;
-  views?: number; // NEW
+  views?: number;
 }
 
 export default function ArticleCard({
@@ -18,7 +20,7 @@ export default function ArticleCard({
   description,
   category,
   image,
-  views = 0, // default 0
+  views = 0,
 }: ArticleCardProps) {
   const formattedDate = new Date(date).toLocaleDateString('en-NZ', {
     month: 'short',
@@ -28,7 +30,7 @@ export default function ArticleCard({
 
   return (
     <article className="bg-card rounded-lg shadow-md hover:shadow-lg transition-all overflow-hidden group">
-      <Link href={`/articles/${slug}`} className="block">
+      <Link to={`/articles/${slug}`} className="block">
         <div className="aspect-video relative overflow-hidden">
           <img
             src={image || `/img/${slug}.jpg`}
@@ -51,20 +53,20 @@ export default function ArticleCard({
             <span>{readTime}</span>
           </div>
           <div className="flex items-center gap-1">
-            <span>👁 {views}</span> {/* Show views */}
+            <span>👁 {views}</span>
           </div>
         </div>
 
         <h2 className="text-xl font-bold text-foreground mb-3 line-clamp-2">
-          <Link href={`/articles/${slug}`} className="hover:text-primary transition-colors">
+          <Link to={`/articles/${slug}`} className="hover:text-primary transition-colors">
             {title}
           </Link>
         </h2>
 
         <p className="text-muted-foreground mb-4 line-clamp-3">{description}</p>
 
-        <a
-          href={`/articles/${slug}`}
+        <Link
+          to={`/articles/${slug}`}
           aria-label={`Read more about ${title}`}
           className="inline-flex items-center gap-2 text-primary font-semibold transition-all hover:gap-3"
         >
