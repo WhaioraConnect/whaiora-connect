@@ -108,6 +108,32 @@
   .input-base {
     @apply block w-full rounded-lg border border-border bg-input-background px-4 py-3 text-foreground placeholder-muted-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary;
   }
+
+  /* Prose enhancements */
+  .prose {
+    @apply text-foreground;
+  }
+  .prose h2 {
+    @apply mt-8 mb-4;
+  }
+  .prose h3 {
+    @apply mt-6 mb-3;
+  }
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+  .prose a {
+    @apply text-primary hover:underline;
+  }
+  .prose strong {
+    @apply font-semibold text-foreground;
+  }
+  .prose ol, .prose ul {
+    @apply my-4;
+  }
+  .prose li {
+    @apply mb-2;
+  }
 }
 
 /* --------------------------------------------- */
