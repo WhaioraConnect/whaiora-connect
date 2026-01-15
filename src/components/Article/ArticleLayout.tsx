@@ -86,7 +86,7 @@ export default function ArticleLayout({ title, date, readTime, category, content
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
         <article
-          className="prose prose-lg max-w-none"
+          className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-ol:text-muted-foreground prose-ul:text-muted-foreground"
           dangerouslySetInnerHTML={{ __html: content }}
         />
 
