@@ -1,0 +1,13 @@
+name: Security.txt Expiry Reminder
+
+on:
+  schedule:
+    - cron: '0 0 16 11 *' # 16 Nov every year
+
+jobs:
+  reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create reminder
+        run: |
+          echo "⚠️ Reminder: security.txt expires in 30 days. Update expiry date."
